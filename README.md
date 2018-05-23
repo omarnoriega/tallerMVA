@@ -6,7 +6,7 @@ Integrantes:
 - Federico Urbina
 - Omar Noriega
 
-![DOCKER](images/Dragster.jpg)
+![DOCKER](https://github.com/memoodm/tallerMVA/blob/master/images/docker.jpg)
 
 ### Arquitectura
 - Type some Markdown on the left
