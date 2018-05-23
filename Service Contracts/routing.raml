@@ -1,0 +1,167 @@
+#%RAML 1.0
+title: Intermediate Routing API
+description: API que registra los datos necesarios de los servicios web expuestos por los distintos convenios y/o empresas de servicios públicos.
+baseUri: 'http://localhost:7001/routing/endpoint/'
+types:
+  Servicio:
+    description: Objeto con datos del servicio publico
+    type: object
+    properties:
+      tiposervicio:
+        required: true
+        example: rest
+        description: Property description
+        type: string
+      service_getInfoFactura:
+        required: true
+        example: ´X´
+        description: Property description
+        type: string
+      service_pagarFactura:
+        required: true
+        example: ´X´
+        description: Property description
+        type: string
+      service_copensarFactura:
+        required: true
+        example: ´X´
+        description: Property description
+        type: string
+      url:
+        required: true
+        example: 'http://localhost:8080/ObtenerServicio/{codigoServicio}'
+        description: Property description
+        type: string
+  Factura:
+    description: This is a new DataType
+    type: object
+    properties:
+      idfactura:
+        required: true
+        example: 100134
+        description: Numero de Factura
+        type: integer
+      valorFactura:
+        required: true
+        example: 130000
+        description: Property description
+        type: number
+  Mapa:
+    description: Mapa que define los convenios (servicios públicos) y su respectivo Enrutamiento.
+    type: object
+    properties:
+      codigo:
+        required: true
+        example: E001
+        type: string
+      type:
+        required: true
+        example: rest
+        type: string
+      InfoFactura:
+        required: true
+        example: '100134'
+        type: string
+      PagarFactura:
+        required: true
+        example: X
+        type: string
+      CopensarFactura:
+        required: true
+        example: X
+        type: string
+      path:
+        required: true
+        example: '/path/localhost:8081/servicios/pagos/v1/payments,rest,X,X,X'
+        type: string
+/obtenerservicios:
+  get:
+    responses:
+      '200':
+        description: Permite obtener un servicio publico
+        body:
+          text/plain:
+            example: 'Codigo: G001 - Servicio: soap - Servicios[X,X,X] - Path: /path/localhost:8082/servicios/pagos/v1/payments'
+            type: string
+'/obtenerservicio/codigoServicio/{codigoservicio}':
+  get:
+    responses:
+      '200':
+        description: Devuelve una ruta a donde debería ir el dispatcher para invocar el servicio web respectivo del convenio.
+        body:
+          text/plain:
+            example: '/path/localhost:8081/servicios/pagos/v1/payments,rest,X,X,X'
+            type: string
+      '404':
+        description: Convenio no encontrado
+        body:
+          text/plain:
+            example: 'ERROR : no se encuentra registrado,x,x,x'
+            type: string
+  uriParameters:
+    codigoservico:
+      example: A001
+      description: Codigo del convenio requerido
+      type: string
+/adicionarservicio/codigo:
+  /tiposervicio:
+    /infofactura:
+      /pagar:
+        /compensar:
+          /path:
+            put:
+              description: Agrega un nuevo convenio de servicio publico.
+              responses:
+                '200':
+                  description: Servicio Adicionado
+                  body:
+                    text/plain:
+                      example: servicio adicionado correctamente
+                      type: string
+            uriParameters:
+              path:
+                pattern: '[a-zA-A0-9:_///-]+'
+                example: 'http://localhost:xxxx/servicios/pagos/v1/payments/123'
+                type: string
+          uriParameters:
+            compensar:
+              example: Example
+              description: Marque con ´X´si se permite esta acción
+              type: string
+        uriParameters:
+          pagar:
+            example: X
+            description: Marque con ´X´si se permite esta acción
+            type: string
+      uriParameters:
+        infofactura:
+          description: datos de la factura
+          type: Factura
+    uriParameters:
+      tiposervicio:
+        example: rest
+        description: tipo de servicio web
+        type: string
+  uriParameters:
+    codigo:
+      example: A001
+      description: Código del Convenio
+      type: string
+/removerservicio/codigoservicio:
+  delete:
+    responses:
+      '200':
+        body:
+          text/plain:
+            example: Servicio eliminado correctamente.
+            type: string
+      '404':
+        body:
+          text/plain:
+            example: 'Error, No existe el servicio.'
+            type: string
+  uriParameters:
+    '{codigoservicio}':
+      example: E001
+      description: Código del convenio  o servicio publico
+      type: string

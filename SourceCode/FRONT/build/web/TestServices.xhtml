@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>TEST</title>
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+    </h:head>
+    <h:body>
+        <h1>Test Servicios:</h1>
+        <h:form>
+            <table>
+                <tr>
+                    <th><p:outputLabel value="Titular" for="txtTitular"/></th>
+                    <th><p:inputText id="txtTitular" required="false" value="#{formService.titular}"/></th>
+                </tr>
+                <tr>
+                    <th><p:outputLabel value="Servicio" for="txtServicio"/></th>
+                    <th><p:inputText id="txtServicio" required="false" value="#{formService.servicio}"/></th>
+                </tr>
+                <tr>
+                    <th><p:outputLabel value="Metodo" for="txtMethod"/></th>
+                    <th>
+                        <p:selectOneMenu id="txtMethod" value="#{formService.method}" label="select service">
+                            <f:selectItem itemLabel="select service" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Buscar Factura" itemValue="getInfoFactura" />
+                            <f:selectItem itemLabel="Pagar Factura" itemValue="pagarFactura" />
+                            <f:selectItem itemLabel="Conpensar Factura" itemValue="copensarFactura" />
+                        </p:selectOneMenu>
+                    </th>
+                </tr>
+                <tr>
+                    <th><p:outputLabel value="IdFactura" for="txtIdFactura"/></th>
+                    <th><p:inputText id="txtIdFactura" required="false" value="#{formService.idFactura}"/></th>
+                </tr>
+                <tr>
+                    <th><p:outputLabel value="ValorFactura" for="txtValorFactura"/></th>
+                    <th><p:inputText id="txtValorFactura" required="false" value="#{formService.valorFactura}"/></th>
+                </tr>
+            </table> 
+            <h:commandButton value="Enviar" action="#{formService.consultar()}"/>
+        </h:form>
+        <br/>
+        <h1>Respuesta:</h1>
+        <p:outputLabel id="outtxt" value="#{formService.respuesta}"></p:outputLabel>
+    </h:body>
+</html>
+

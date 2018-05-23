@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1527032390305
+Build-Jdk: 1.8.0_161
+Built-By: Admin
+Bundle-ManifestVersion: 2
+Bundle-Name: apache-camel-jaxrs
+Bundle-SymbolicName: com.javainuse.apache-camel-jaxrs
+Bundle-Version: 0.0.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.javainuse.beans;version="0.0.1.SNAPSHOT";uses:="java
+ x.ws.rs",com.javainuse.direcciones;version="0.0.1.SNAPSHOT",com.javainu
+ se.entity;version="0.0.1.SNAPSHOT";uses:="javax.xml.bind.annotation"
+Import-Package: javax.ws.rs;version="[2.0,3)",javax.ws.rs.client;version
+ ="[2.0,3)",javax.xml.bind.annotation
+Tool: Bnd-2.1.0.20130426-122213
