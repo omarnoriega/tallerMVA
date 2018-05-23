@@ -6,6 +6,7 @@ Integrantes:
 - Federico Urbina
 - Omar Noriega
 
+![DOCKER](images/Dragster.jpg)
 
 ### Arquitectura
 - Type some Markdown on the left
