@@ -74,94 +74,107 @@ types:
         required: true
         example: '/path/localhost:8081/servicios/pagos/v1/payments,rest,X,X,X'
         type: string
-/obtenerservicios:
+/adicionarservicio:
+  /codigo:
+    /tiposervicio:
+      /infofactura:
+        /pagar:
+          /compensar:
+            uriParameters:
+              compensar:
+                example: Example
+                description: Marque con ´X´si se permite esta acción
+                type: string
+            '/path/{path}':
+              uriParameters:
+                path:
+                  pattern: '[a-zA-A0-9:_///-]+'
+                  example: 'http://localhost:xxxx/servicios/pagos/v1/payments/123'
+                  type: string
+          uriParameters:
+            pagar:
+              example: X
+              description: Marque con ´X´si se permite esta acción
+              type: string
+        uriParameters:
+          infofactura:
+            description: datos de la factura
+            type: Factura
+      uriParameters:
+        tiposervicio:
+          example: rest
+          description: tipo de servicio web
+          type: string
+    uriParameters:
+      codigo:
+        example: A001
+        description: Código del Convenio
+        type: string
+  /:
+    put:
+      description: Permite Agregar un nuevo convenio de servicio publico en la tabla de enrutamiento.
+      responses:
+        '200':
+          description: Respuesta exitosa
+          body:
+            application/json:
+              example: Servicio Agregado Exitosamente
+              type: string
+        '400':
+          description: Respuesta con error en parámetros
+          body:
+            application/json:
+              example: Error en parametros
+              type: string
+        '404':
+          description: Respuesta Con error
+          body:
+            application/json:
+              example: Servicio no encontrado
+              type: string
+/removerservicio:
+  /:
+    delete:
+      responses:
+        '200':
+          description: Respuesta satisfactoria
+          body:
+            text/plain:
+              example: Servicio eliminado correctamente
+              type: string
+  '/codigoservicio/{codigoservicio}':
+    uriParameters:
+      codigoservicio:
+        example: E001
+        description: Código del convenio  o servicio publico
+        type: string
+/obtenerservicios/:
   get:
     responses:
       '200':
-        description: Permite obtener un servicio publico
+        description: Permite obtener un listado de servicios publico
         body:
           text/plain:
             example: 'Codigo: G001 - Servicio: soap - Servicios[X,X,X] - Path: /path/localhost:8082/servicios/pagos/v1/payments'
             type: string
-'/obtenerservicio/codigoServicio/{codigoservicio}':
-  get:
-    responses:
-      '200':
-        description: Devuelve una ruta a donde debería ir el dispatcher para invocar el servicio web respectivo del convenio.
-        body:
-          text/plain:
-            example: '/path/localhost:8081/servicios/pagos/v1/payments,rest,X,X,X'
-            type: string
-      '404':
-        description: Convenio no encontrado
-        body:
-          text/plain:
-            example: 'ERROR : no se encuentra registrado,x,x,x'
-            type: string
+'/obtenerservicio/codigoServicio/{codigoservico}':
+  /:
+    get:
+      responses:
+        '200':
+          description: Devuelve una ruta a donde debería ir el dispatcher para invocar el servicio web respectivo del convenio.
+          body:
+            text/plain:
+              example: '/path/localhost:8081/servicios/pagos/v1/payments,rest,X,X,X'
+              type: string
+        '404':
+          description: Convenio no encontrado
+          body:
+            text/plain:
+              example: 'ERROR : no se encuentra registrado,x,x,x'
+              type: string
   uriParameters:
     codigoservico:
       example: A001
       description: Codigo del convenio requerido
-      type: string
-/adicionarservicio/codigo:
-  /tiposervicio:
-    /infofactura:
-      /pagar:
-        /compensar:
-          /path:
-            put:
-              description: Agrega un nuevo convenio de servicio publico.
-              responses:
-                '200':
-                  description: Servicio Adicionado
-                  body:
-                    text/plain:
-                      example: servicio adicionado correctamente
-                      type: string
-            uriParameters:
-              path:
-                pattern: '[a-zA-A0-9:_///-]+'
-                example: 'http://localhost:xxxx/servicios/pagos/v1/payments/123'
-                type: string
-          uriParameters:
-            compensar:
-              example: Example
-              description: Marque con ´X´si se permite esta acción
-              type: string
-        uriParameters:
-          pagar:
-            example: X
-            description: Marque con ´X´si se permite esta acción
-            type: string
-      uriParameters:
-        infofactura:
-          description: datos de la factura
-          type: Factura
-    uriParameters:
-      tiposervicio:
-        example: rest
-        description: tipo de servicio web
-        type: string
-  uriParameters:
-    codigo:
-      example: A001
-      description: Código del Convenio
-      type: string
-/removerservicio/codigoservicio:
-  delete:
-    responses:
-      '200':
-        body:
-          text/plain:
-            example: Servicio eliminado correctamente.
-            type: string
-      '404':
-        body:
-          text/plain:
-            example: 'Error, No existe el servicio.'
-            type: string
-  uriParameters:
-    '{codigoservicio}':
-      example: E001
-      description: Código del convenio  o servicio publico
       type: string

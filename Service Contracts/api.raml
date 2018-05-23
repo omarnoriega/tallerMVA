@@ -22,72 +22,88 @@ types:
         example: 130000
         description: Valor a pagar
         type: number
-'/{type}':
-  /getInfoFactura:
-    get:
-      description: Permite conocer el valor de una factura
-      responses:
-        '200':
-          description: Devuelve numero de factura y valor a pagar
-          body:
-            application/json:
-              type: factura
-        '400':
-          description: 'Error, Metodo no existe'
-        '404':
-          description: 'Error ,falta un parametro'
-    '/{idfactura}':
-      get:
-        description: Devuelve Numero de Factura
-        responses:
-          '200':
-            description: Numero de Factura
-            body:
-              application/json:
-                type: factura
-          '400':
-            description: 'Error, no existe factura'
-          '404':
-            description: Numero de Factura no existe
+/getInfoFactura:
+  get:
+    description: Permite conocer el valor de una factura
+    responses:
+      '200':
+        description: Devuelve numero de factura y valor a pagar
+        body:
+          application/json:
+            type: factura
+      '400':
+        description: 'Error, Metodo no existe'
+      '404':
+        description: 'Error ,falta un parametro'
+  '/type/{type}':
+    uriParameters:
+      type:
+        example: rest
+        description: Tipo de servicio web
+        type: string
+    '/idfactura/{idfactura}':
       uriParameters:
         idfactura:
           example: 100345
           description: Numero de Factura
           type: integer
-  /pagarFactura:
+/pagarFactura:
+  /:
     post:
-      description: Permite cancelar el valor de la factura
+      description: Valor de la factura a pagar
       responses:
         '200':
-          description: ok
-        '400':
-          description: Error Numero de factura no valido
-    '/{idfactura}':
-      post:
-        description: Numero de factura a pagar
-        queryParameters:
-          idfactura:
-            example: 100345
-            type: integer
-      '/{valorfactura}':
-        post:
-          description: Valor de la factura a pagar
-          queryParameters:
-            valorfactura:
-              example: Example
-              description: valor a pagar
+          body:
+            application/json:
+              example: Example Pagada Exitosamente
               type: string
-  /compensarFactura:
-    delete:
-      description: Permite Eliminar una factura luego de recibir el pago
-      responses:
-        '404':
-          description: Acción No Encontrada
-    '/{idfactura}':
-      delete:
-        description: Factura a Eliminar (compensar) una factura
-        responses:
-          '200':
-            description: Factura Compensada Exitosamente
-          '404':
-            description: Factura No encontrada
+  '/type/{type}':
+    uriParameters:
+      type:
+        example: REST
+        description: Tipo de servicio
+        type: string
+    '/idfactura/{idfactura}':
+      uriParameters:
+        idfactura:
+          example: '1003255'
+          description: ' '
+          type: string
+      '/valorFactura/{valorfactura}':
+        uriParameters:
+          valorfactura:
+            example: 300010
+            type: number
+/compensarFactura:
+  delete:
+    description: Permite Eliminar una factura luego de recibir el pago
+    responses:
+      '200':
+        description: Respuesta satisfactoria
+        body:
+          text/plain:
+            example: Factura Compensada Exitosamente
+            type: string
+      '404':
+        description: Respuesta con error
+        body:
+          text/plain:
+            example: Acción No Encontrada
+            type: string
+  uriParameters:
+    type:
+      example: Example
+      description: Tipo de Servicio web
+      type: string
+  '/type/{type}':
+    uriParameters:
+      type:
+        example: REST
+        description: Tipo de servicio Web
+        type: string
+    '/idfactura/{idfactura}':
+      uriParameters:
+        idfactura:
+          example: 100345
+          description: Property description
+          type: integer
