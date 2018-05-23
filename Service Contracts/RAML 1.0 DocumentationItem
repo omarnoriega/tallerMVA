@@ -1,0 +1,11 @@
+#%RAML 1.0 DocumentationItem
+#Taller de  Modelado y Validación de Arquitectura
+#Tema: Modelar e implementar una solución utilizando una aproximación orientada a servicios, basándose en los principios de diseño de servicios, patrones y estrategias de diseño
+#Mayo 23 2018
+#Integrantes: Federico Urbina, Guillermo de Mendoza y Omar Noriega
+title: Gestión de Pagos de Servicios Publicos
+content: Describe los contratos de los servicios web que componen la solución. 
+uses: 
+API.raml Servicio web que permite gestionar el pago de facturas de servicios públicos independientemente del convenio (empresa de servicios públicos). 
+ROUTING.raml API que registra los datos necesarios de los servicios web expuestos por los distintos convenios y/o empresas de servicios públicos. 
+API que permite la orquestación de los servicios web encargados de la gestión del pago de servicios públicos.

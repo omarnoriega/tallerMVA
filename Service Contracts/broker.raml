@@ -1,0 +1,162 @@
+#%RAML 1.0
+title: Broker Gestion Pago de Servicios
+description: API que permite la orquestación de los servicios web encargados de la gestión del pago de servicios públicos.
+version: '0.1'
+mediaType: application/json
+protocols:
+  - HTTP
+  - HTTPS
+baseUri: 'http://localhost:9000/ESB/API/'
+types:
+  Cliente:
+    type: object
+    properties:
+      target:
+        required: true
+        example: 'http://localhost:8080/ROUTING/EndPoint'
+        description: Objeto que almacena los datos para evaluar si los parámetros de llamado son validos.
+        type: string
+/getInfoFactura:
+  /:
+    get:
+      description: 'Este recurso permite invocar el servicio web de Obtener Factura a través de la tabla de enrutamiento del respectivo convenio '
+      responses:
+        '200':
+          description: Devuelve la ruta del servicio publico a pagar.
+          body:
+            text/plain:
+              description: Retorna una URI
+              example: 'http://localhost:8080/API-Servicios/EndPoint/type/rest/service/getInfoFactura/idFactura/1/valorFactura/1/path/localhost:8081/servicios/pagos/v1/payments'
+              type: string
+        '400':
+          description: 'ERROR : no se encuentra registrado'
+          body:
+            text/plain:
+              description: 'ERROR : no se encuentra registrado'
+              example: ERROR - NotFound Allowed
+              type: string
+        '404':
+          description: 'ERROR : no se encuentra registrado'
+          body:
+            text/plain:
+              example: ERROR - NotFound Service
+              type: string
+  '/titular/{titular}':
+    uriParameters:
+      titular:
+        example: Guillermo
+        description: Nombre del Cliente
+        type: string
+    '/codigo/{codigo}':
+      uriParameters:
+        codigo:
+          example: A001
+          description: Código del convenio a pagar
+          type: string
+      '/idFactura/{idfactura}':
+        uriParameters:
+          idfactura:
+            example: 1000123
+            description: Numero de factura a pagar
+            type: integer
+/compensarFactura:
+  /:
+    delete:
+      description: Este recurso permite invocar el servicio web de Compensar Factura a través de la tabla de enrutamiento del respectivo convenio
+      responses:
+        '200':
+          description: '# Devuelve los parámetros necesarios para invocar el servicio de Compensar Factura del respectivo convenio.'
+          body:
+            text/plain:
+              description: Retorna una URI
+              example: 'http://localhost:8080/API-Servicios/EndPoint/type/rest/service/copensarFactura/idFactura/1/valorFactura/999/path/localhost:8081/servicios/pagos/v1/payments'
+              type: string
+        '400':
+          description: Error de servicio con parámetros incompletos
+          body:
+            text/plain:
+              example: ERROR - NotFound Allowed
+              type: string
+        '404':
+          description: Respuesta de Servicio no encontrado
+          body:
+            text/plain:
+              example: ERROR - NotFound Service
+              type: string
+  '/titular/{titular}':
+    uriParameters:
+      titular:
+        example: Guillermo
+        description: Nombre del cliente
+        type: string
+    '/codigo/{codigo}':
+      uriParameters:
+        codigo:
+          example: AG001
+          description: Código del convenio
+          type: string
+      '/idFactura/{idFactura}':
+        uriParameters:
+          idFactura:
+            example: '1001112'
+            description: Numero de factura a compensar
+            type: string
+        '/valorFactura/{valorFactura}':
+          /: {}
+          uriParameters:
+            valorFactura:
+              example: '130000'
+              description: Valor de Factura a compensar.
+              type: string
+/pagarFactura:
+  /:
+    post:
+      description: 'Este recurso permite invocar el servicio web de Pagar factura a través de la tabla de enrutamiento del respectivo convenio  '
+      responses:
+        '200':
+          description: Ruta del servicio web
+          body:
+            text/plain:
+              description: Retorna una URI
+              example: 'http://localhost:8080/API-Servicios/EndPoint/type/rest/service/pagarFactura/idFactura/1/valorFactura/999/path/localhost:8081/servicios/pagos/v1/payments'
+              type: string
+        '400':
+          description: Error en parametros
+          body:
+            text/plain:
+              example: ERROR - NotFound Allowed
+              type: string
+        '404':
+          description: Servicio no encontrado
+          body:
+            text/plain:
+              example: ERROR - NotFound Service
+              type: string
+  '/titular/{titular}':
+    uriParameters:
+      titular:
+        example: Guillermo
+        description: Nombre del cliente
+        type: string
+    '/codigo/{codigo}':
+      uriParameters:
+        codigo:
+          example: E003
+          description: Código del convenio
+          type: string
+      '/idFactura/{idFactura}':
+        uriParameters:
+          idFactura:
+            example: 1001234
+            description: Numero de Factura
+            type: integer
+        '/valorFactura/{valorFactura}':
+          uriParameters:
+            valorFactura:
+              example: 130000
+              description: Valor a pagar
+              type: number
+
+
+
+
